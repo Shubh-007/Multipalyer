@@ -2,7 +2,7 @@
 #include<pthread.h>
 pthread_mutex_t l1,l2;
 pthread_t t1,t2,t3,t4,t5;
-int nog=2;nop=3,plcnt=0,gmcnt=0;
+int nog=0,nop=3,plcnt=0,gmcnt=0;nog=nop/3;
 
 void *stgm()
 	{if(gmcnt==0){pthread_mutex_lock(&l1);
