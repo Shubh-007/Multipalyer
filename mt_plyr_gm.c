@@ -2,7 +2,7 @@
 #include<pthread.h>
 pthread_mutex_t l1,l2;
 pthread_t t1,t2,t3,t4,t5;
-int nog=0,nop=3,plcnt=0,gmcnt=0;nog=nop/3;
+int nop=3;plcnt=0,gmcnt=0;
 
 void *stgm()
 	{if(gmcnt==0){pthread_mutex_lock(&l1);
@@ -31,7 +31,7 @@ void *mtst()
 		pthread_join(t3,NULL);printf("\n Let the GAME begin\n");pthread_create(&t4,NULL,gme,NULL);
 		pthread_join(t4,NULL);}}
 int main()
-	{int i,j;
+	{int i,j,nog=nop/3;;
 	for(i=0;i<nop;i++)
 		{pthread_create(&t1,NULL,plyron,NULL);
 		printf("\nPlayer %d is online\n",i+1);
