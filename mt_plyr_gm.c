@@ -18,7 +18,8 @@ void *stgm()
 	pthread_join(t2,NULL);pthread_mutex_unlock(&l1);
 	if(plcnt<3){pthread_create(&t4,NULL,gme,NULL);pthread_join(t4,NULL);jj++;}
 	
-	}else printf("\nCannot start due to pre-existing game\n");}
+	}else if(gmcnt>0) printf("\nCannot start due to pre-existing game\n");
+	else if(plcnt<3) printf("\nCannot start due to less number of players\n");}
 
 void *gme()
 	{if(gmcnt>0){printf("\nGame no. %d is going to end\n",gmcnt);
