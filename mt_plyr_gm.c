@@ -2,7 +2,7 @@
 #include<pthread.h>
 pthread_mutex_t l1,l2;
 pthread_t t1,t2,t3,t4,t5;
-int nop=3;plcnt=0,gmcnt=0,jj=0;
+int nop=3;plcnt=0,gmcnt=0,jj=0,i,j;
 void *plyroff();
 void *gme();
 void *stgm();
@@ -13,7 +13,7 @@ void *mtst();
 
 void *stgm()
 	{if(gmcnt==0&&plcnt>=3){pthread_mutex_lock(&l1);
-	gmcnt++;printf("\nGame no. %d is Starting\n",gmcnt);
+	gmcnt++;printf("\nGame no. %d is Starting\n",j+1);
 	pthread_create(&t2,NULL,plyroff,NULL);printf("\nPlayer %d is offline\n",plcnt);
 	pthread_join(t2,NULL);pthread_mutex_unlock(&l1);
 	if(plcnt<3){pthread_create(&t4,NULL,gme,NULL);pthread_join(t4,NULL);jj++;}
@@ -22,7 +22,7 @@ void *stgm()
 	else if(plcnt<3) printf("\nCannot start due to less number of players\n");}
 
 void *gme()
-	{if(gmcnt>0){printf("\nGame no. %d is going to end\n",gmcnt);
+	{if(gmcnt>0){printf("\nGame no. %d is going to end\n",j+1);
 	pthread_mutex_lock(&l1);
 	gmcnt--;printf("\nGAME ENDS\n");
 	pthread_mutex_unlock(&l1);
@@ -48,7 +48,7 @@ void *mtst()
 	}
 
 int main()
-	{int i,j,nog=nop/3;;
+	{int nog=nop/3;;
 	for(i=0;i<nop;i++)
 		{pthread_create(&t1,NULL,plyron,NULL);
 		printf("\nPlayer %d is online\n",i+1);
@@ -56,7 +56,8 @@ int main()
 		}
 	
 	for(j=0;j<nog;j++)
-		{pthread_create(&t5,NULL,mtst,NULL);pthread_join(t5,NULL);}
+		{pthread_create(&t5,NULL,mtst,NULL);pthread_join(t5,NULL);
+		}
 	
 	if(jj==0){for(;i>0;i--){
 		pthread_create(&t2,NULL,plyroff,NULL);printf("\nPlayer %d is offline\n",i);pthread_join(t2,NULL);}}
